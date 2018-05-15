@@ -106,13 +106,13 @@ venv.bak/
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/main/node_modules
+/node_modules
 
 # testing
-/main/coverage
+/coverage
 
 # production
-/main/build
+/build
 
 # misc
 .DS_Store
