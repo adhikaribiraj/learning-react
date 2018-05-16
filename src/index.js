@@ -10,6 +10,14 @@ function Square(props) {
     );
 }
 
+function ControlButton (props) {
+    return (
+        <button className="control" onClick={props.onClick}>
+            {props.value}
+        </button>
+    );
+}
+
 class Board extends React.Component {
 
     constructor(props) {
@@ -88,19 +96,61 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
-render() {
-    return (
-    <div className="game">
-        <div className="game-board">
-        <Board />
-        </div>
-        <div className="game-info">
-        <div>{/* status */}</div>
-        <ol>{/* TODO */}</ol>
-        </div>
-    </div>
-    );
-}
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          playing: false,
+          gameControl: "Play",
+          message: "Click Play to Start Game!",
+        };
+      }
+
+    renderButton() {
+        return(
+            <ControlButton 
+                value={this.state.gameControl}
+                onClick={() => this.handleClick()}
+            />
+        );
+    }
+    handleClick() {
+        if (!this.state.playing){
+            this.setState({
+                playing: true,
+                gameControl: "Stop"
+            });
+        }
+        else {
+            this.setState({
+                playing: false,
+                gameControl: "Play"
+            })
+        }
+    }
+
+    renderGame() {
+        if (this.state.playing) {
+            return (
+                <div>
+                    <div className="game-board">
+                        <Board />
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <div className="game">
+                <div>{this.renderGame()}</div>
+                <div className="game-control">
+                    <div>{this.renderButton()}</div>
+                </div>
+            </div>
+        );
+    }
 }
 
 function hasWon (squares) {
